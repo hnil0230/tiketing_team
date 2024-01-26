@@ -16,10 +16,18 @@ public class Reservation {
     @Column(nullable = false)
     private String email;
 
-    @ElementCollection
-    @CollectionTable(name = "selected_seats", joinColumns = @JoinColumn(name = "reservation_id"))
-    @Column(name = "seat")
-    private List<String> selectedSeats;
+    @Column(name = "seats", nullable = false)
+    private String selectedSeats;
+
+    public String[] getSeatsArray() {
+        if (selectedSeats == null || selectedSeats.isEmpty()) {
+            return new String[]{};
+        }
+        return selectedSeats.split(",");
+    }
+    public void setSeatsArray(String[] seatsArray) {
+        this.selectedSeats= String.join(",", seatsArray);
+    }
 
     @Column(nullable = false)
     private Long sid;
